@@ -1,13 +1,35 @@
 {% extends "base.html" %} {% block title %} Adopt a Pet {% endblock %} {% block
 content %}
-<h1>Adopt a Pet</h1>
-<h2>Pets:</h2>
-{% for pet in pets %}
-<img src="{{pet.photo_url}}" />
-<p><a href="/{{pet.id}}">{{pet.name}}</a></p>
-{% if pet.available %}
-<p>I'm Available!</p>
-{% endif %} {% endfor %}
-<a href="/add" class="btn btn-sucess">Add a Pet</a>
-
+<div class="container">
+  <h1 class="text-center display-2">Adopt a Pet</h1>
+  <div class="row">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <p class="text-danger display-6">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %}
+    <h2 class="display-4 text-danger">Available Pets:</h2>
+    {% for pet in pets %} {% if pet.available %}
+    <img
+      class="col-md-10 img-responsive"
+      src="{{pet.photo_url}}"
+      style="width: auto; height: 400px"
+    />
+    <p><a href="/{{pet.id}}" class="display-5">{{pet.name}}</a></p>
+    <p>I'm <strong class="text-warning">Available!</strong></p>
+    {% endif %} 
+    {% endfor %}
+  </div>
+  <hr class="my-4" />
+  <h2 class="display-4 text-danger">Unavailable Pets (But Still Cute):</h2>
+    {% for pet in pets %} {% if pet.available is sameas true %}
+    <img
+      class="col-md-10 img-responsive"
+      src="{{pet.photo_url}}"
+      style="width: auto; height: 400px"
+    />
+    <p><a href="/{{pet.id}}" class="display-5">{{pet.name}}</a></p>
+    {% endif %} {% endfor %}
+  </div class="mx-auto" style="width: 200px;">
+  <a href="/add" class="btn btn-primary btn-lg">Add a Pet</a>
+</div>
 {% endblock %}

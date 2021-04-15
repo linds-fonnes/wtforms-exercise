@@ -35,9 +35,10 @@ def show_add_pet_form():
 
         db.session.add(pet)
         db.session.commit()
-
+        flash(f"{pet.name} added to pets!")
         return redirect("/")
 
+    # re-present form for editing
     return render_template("add_pet_form.html", form=form)
 
 @app.route("/<int:pet_id>", methods=["GET","POST"])    
@@ -51,6 +52,7 @@ def show_pet_details(pet_id):
         pet.notes = form.notes.data
         pet.available = form.available.data
         db.session.commit()
+        flash("Info updated successfully!")
         return redirect(f"/{pet.id}")
-
+    #error in form input: re-present form for editing
     return render_template("pet_details.html", pet=pet, form=form)
