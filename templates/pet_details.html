@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %} {{pet.name}} {% endblock %} {% block
+content %}
+<h1>All About {{pet.name}}</h1>
+<p>Hi! My name is {{pet.name}} and I am a {{pet.species}}</p>
+{% if pet.age %}
+<p>I am {{pet.age}} years old.</p>
+{% endif %} {% if pet.notes %}
+<p>Just some info on me: {{pet.notes}}</p>
+{% endif %} {% if pet.photo_url %}
+<p>Here's a photo of what I look like!</p>
+<img src="{{pet.photo_url}}" />
+{% endif %}
+<h2>Edit Details:</h2>
+<form method="POST" action="/{{pet.id}}">
+  {{ form.hidden_tag() }} {% for field in form if field.widget.input_type !=
+  'hidden' %}
+  <p>{{ field.label }} {{ field }}</p>
+  {% endfor %}
+  <button>Submit</button>
+  <button formmethod="GET" formaction="/">Home</button>
+</form>
+{% endblock %}
